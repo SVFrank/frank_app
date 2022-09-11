@@ -1,51 +1,50 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {nanoid} from 'nanoid';
-
+import { nanoid } from 'nanoid';
+import axios from 'axios';
 import "./Home.css";
 import personData from "../Data";
-import { NavigateNextOutlined } from "@material-ui/icons";
+
 
 // Get user information from backend - API
 
 function Home() {
-  const [data, setdata] = useState(personData);
-  const [contacts, setContacts] = useState(personData);
-  const [userEdit, setuserEdit] = useState(false);
-  const [addFormData, setAddFormData] = useState({
-    Name:'',
-    email:'',
-    contact:''
-  })
-  const handleAddFormChange = (event) => {
-    event.preventDefault();
+  const [data, setdata] = useState();
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [contact, setContact] = useState();
 
-    const fieldName = event.target.getAttribute('name');
-    const fieldValue = event.target.Value;
 
-    const newFormData = { ...addFormData};
-    newFormData[fieldName] = fieldValue;
-
-    setAddFormData(newFormData);
-  };
-
-  const handleAddFormSubmit = (event) => {
-    event.preventDefault();
-
-    const newContact = {
-      id: nanoid(),
-      Name: addFormData.Name,
-      email:addFormData.email,
-      contact:addFormData.contact,
-    };
-   const newContacts = [...contacts, newContact];
-   setContacts(newContacts);
+  const handleAddFormSubmit = async () => {
+    await axios.post(`http://localhost:5000/api/post`, {
+      emp_name:  name ,
+      emp_email: email ,
+      emp_contact: contact 
+    }).then((
+   
+   ) => { }).catch(err => console.log(err));
   };
   const handleclick = (id) => {
     if (window.confirm("Are you sure to delete?")) {
-      setdata(data.filter((i) => i.ID !== id));
+      axios.delete(`http://localhost:5000/api/remove/${id}`)
     }
   };
+  useEffect(() => {
+    fetchData();
+
+  },[] );
+
+  const fetchData = async () => {
+    await axios.get('http://localhost:5000/api/get').then((res) => {
+      const fdata = res.data;
+      if (!fdata) {
+        console.log("empty fdata");
+      }
+      setdata(fdata);
+
+    }).catch(err => console.log(err));
+ 
+  }
 
   return (
     <div className="home_container">
@@ -69,25 +68,24 @@ function Home() {
               data.map((val, key) => {
                 return (
                   <tr key={key}>
-                    <td>{val.ID}</td>
-                    <td>{val.name}</td>
-                    <td>{val.mail}</td>
-                    <td>{val.contact}</td>
+                    <td>{val.id}</td>
+                    <td>{val.emp_name}</td>
+                    <td>{val.emp_email}</td>
+                    <td>{val.emp_contact}</td>
                     <td>
                       <div className="buttons">
-                        <Link to={`/edit/${val.ID}`}>
+                        <Link to={`/edit/${val.id}`}>
                           <button className="btn btn-Edit">Edit</button>
                         </Link>
-                        <div onClick={() => handleclick(val.ID)}>
+                        <div onClick={() => handleclick(val.id)}>
                           <button className="btn btn-Delete">Delete</button>
                         </div>
-                        <Link to={`/view/${val.ID}`}>
+                        <Link to={`/view/${val.id}`}>
                           <button className="btn btn-View">View</button>
                         </Link>
                       </div>
                     </td>
 
-                    <td>{val.action}</td>
                   </tr>
                 );
               })}
@@ -98,9 +96,9 @@ function Home() {
       </div>
       <h2>Add User</h2>
         <form onSubmit={handleAddFormSubmit}>
-          <input type="text" name="name" required="required" placeholder="Enter" onChange={handleAddFormChange}/>
-          <input type="email" name="email" required="required" placeholder="Enter a mail" onChange={handleAddFormChange}/>
-          <input type="number" email="contact" required="required" placeholder="Enter a contact" onChange={handleAddFormChange}/>
+          <input type="text" name="emp_name" required="required" placeholder="Enter" value={name} onChange={(event)=>setName(event.target.value)}/>
+          <input type="email" name="emp_email" required="required" placeholder="Enter a mail" value={email} onChange={(event)=>setEmail(event.target.value)} />
+          <input type="number"  name="emp_contact" required="required" placeholder="Enter a contact" value={contact} onChange={(event)=>setContact(event.target.value)}/>
           <button type="submit">Add</button>
         </form>
     </div>

@@ -1,20 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-
-import { Toast } from "react-toastify";
 import axios from "axios";
-
-import personData from "../Data";
 import "./View.css";
 
 // Get user information from backend - API
 
 function View() {
   const { id } = useParams();
-  const [data, setdata] = useState(personData);
+  const [data, setdata] = useState();
+
+  const fetchData = async () => {
+    
+    await axios.get(`http://localhost:5000/api/get/${id}`).then((res) => {
+      const fdata = res.data;
+      if (!fdata) {
+        console.log("empty fdata");
+      }
+      setdata(fdata);
+
+    }).catch(err => console.log(err));
+  }
 
   useEffect(() => {
-    setdata(data.filter((item) => item.ID == id));
+    fetchData();
   }, [id]);
 
   return (
@@ -27,19 +35,19 @@ function View() {
         <div className="view_inner_container">
           <div className="items">
             <div className="item_data_head">ID</div>
-            <div className="item_data">{data[0].ID}</div>
+            <div className="item_data">{data[0].id}</div>
           </div>
           <div className="items">
             <div className="item_data_head">Name</div>
-            <div className="item_data">{data[0].name}</div>
+            <div className="item_data">{data[0].emp_name}</div>
           </div>
           <div className="items">
             <div className="item_data_head">Email</div>
-            <div className="item_data">{data[0].mail}</div>
+            <div className="item_data">{data[0].emp_email}</div>
           </div>
           <div className="items">
             <div className="item_data_head">Contact</div>
-            <div className="item_data">{data[0].contact}</div>
+            <div className="item_data">{data[0].emp_contact}</div>
           </div>
 
           <Link to={'/'} className="go_back">
