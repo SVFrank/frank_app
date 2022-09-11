@@ -1,0 +1,99 @@
+.home_container{
+  width:100vw;
+ background-color: rgb(27, 171, 123); 
+
+}
+
+.header{
+ 
+  height: 110px;
+  background-color: rgb(8, 10, 9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+
+}
+.table_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+}
+
+h2{
+  
+  font-size: 34px;
+  color: white;
+ 
+ 
+}
+  
+table {
+border-collapse: collapse;
+  width: 80%;
+  margin: auto;
+ 
+
+text-align: center;
+  background-color: white;
+  margin-top: 50px;
+  
+}
+
+  
+th {
+  
+  background-color: rgb(158, 158, 167); 
+  height: 100px;
+}
+  
+td {
+  height: 70px;
+}
+
+.btn{
+  position: flex;
+  display: grid;
+  border: none;
+  color: white;
+  padding: 15px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 5px;
+  font-size: 16px;
+ margin: 8px 5px;
+ cursor: pointer;
+
+}
+.buttons{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.btn-Edit{
+background-color: rgb(192, 14, 14);
+
+}
+
+.btn-Delete{
+  background-color: rgb(0, 0, 0);
+
+  
+  }
+
+  .btn-View{
+    background-color:rgb(31, 61, 214);
+    
+    }
+
+    
+    
+
+    table tbody tr:nth-child(even){
+      background-color: rgba(158, 198, 239, 0.912);
+    }
+    

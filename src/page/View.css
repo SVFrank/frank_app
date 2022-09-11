@@ -1,0 +1,56 @@
+.view_container{
+  width: 100vw;
+  background-color: rgb(27, 171, 123); 
+height: 100vh;
+  
+}
+.view_header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background-color: rgb(8, 10, 9);
+color: white;
+
+}
+.view_main{
+  margin-top: 100px;
+  width: 30%;
+margin-left: auto;
+margin-right: auto;
+background-color: gainsboro;
+padding: 20px;
+border-radius: 10px;
+
+}
+
+.view_inner_container{
+  display: flex;
+  flex-direction: column;
+
+}
+.items{
+  margin-top: 10px;
+  display: flex;
+
+}
+.item_data_head,.item_data{
+  flex: 1;
+  font-size: large;
+  font-weight: 500;
+}
+.go_back{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+}
+.back_btn{
+  padding: 10px 30px;
+  border-radius: 10px;
+  background-color: blue;
+}
+.btn_text{
+  font-weight: 800;
+  color: white;
+}
